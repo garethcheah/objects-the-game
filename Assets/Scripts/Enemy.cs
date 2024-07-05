@@ -2,38 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy
+public class Enemy : PlayableObject
 {
-    public Health health = new Health();
-    public Weapon weapon = new Weapon();
-
-    private string _name;
+    private string _enemyName;
     private float _speed;
     private EnemyType _enemyType;
+    private Transform _target;
 
-    public Enemy(string name, EnemyType enemyType)
+    public Enemy(string enemyName, EnemyType enemyType)
     {
-        _name = name;
+        _enemyName = enemyName;
         _enemyType = enemyType;
     }
 
-    public void Move(Transform target)
+    public override void Move()
     {
-        Debug.Log($"Enemy {_name} move towards {target.name}.");
+        Debug.Log($"Enemy {_enemyName} move towards {_target.name}.");
     }
 
-    public void Shoot(Vector3 direction, float speed)
+    public override void Shoot(Vector3 direction, float speed)
     {
-        Debug.Log($"Enemy {_name} shoots bullet at {direction} with a speed of {speed}.");
+        Debug.Log($"Enemy {_enemyName} shoots bullet at {direction} with a speed of {speed}.");
     }
 
-    public void Attack(float interval)
+    public override void Attack(float interval)
     {
-        Debug.Log($"Enemy {_name} attacking with an interval of {interval}.");
+        Debug.Log($"Enemy {_enemyName} attacking with an interval of {interval}.");
     }
 
-    public void Die()
+    public override void Die()
     {
-        Debug.Log("Enemy {_name} dead.");
+        Debug.Log($"Enemy {_enemyName} dead.");
     }
 }

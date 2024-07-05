@@ -2,25 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player
+public class Player : PlayableObject
 {
-    public Health health = new Health();
-    public Weapon weapon = new Weapon();
-
-    private string _nickName;
+    private string _playerName;
     private float _speed;
+    private Vector3 _direction;
 
-    public void Move(Vector3 direction)
+    // Start is called before the first frame update
+    void Start()
     {
-        Debug.Log($"Move towards {direction}.");
+        health = new Health(100.0f, 0.5f, 100.0f);
     }
 
-    public void Shoot(Vector3 direction, float speed)
+    public override void Move()
+    {
+        base.Move();
+    }
+
+    public override void Shoot(Vector3 direction, float speed)
     {
         Debug.Log($"Shoots bullet at {direction} with a speed of {speed}.");
     }
 
-    public void Die()
+    public override void Die()
     {
         Debug.Log("Player dead.");
     }
