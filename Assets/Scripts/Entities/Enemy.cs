@@ -15,14 +15,14 @@ public class Enemy : PlayableObject
         _enemyType = enemyType;
     }
 
-    public override void Move()
+    public override void Move(Vector2 direction, Vector2 target)
     {
         Debug.Log($"Enemy {_enemyName} move towards {_target.name}.");
     }
 
-    public override void Shoot(Vector3 direction, float speed)
+    public override void Shoot()
     {
-        Debug.Log($"Enemy {_enemyName} shoots bullet at {direction} with a speed of {speed}.");
+        Debug.Log("Enemy shooting.");
     }
 
     public override void Attack(float interval)
@@ -33,5 +33,10 @@ public class Enemy : PlayableObject
     public override void Die()
     {
         Debug.Log($"Enemy {_enemyName} dead.");
+    }
+
+    public override void GetDamage(float damageValue)
+    {
+        throw new System.NotImplementedException();
     }
 }

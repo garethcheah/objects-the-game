@@ -11,7 +11,7 @@ public class EnemyExploder : Enemy
         this.explosiveForce = explosiveForce;
     }
 
-    public override void Shoot(Vector3 direction, float speed)
+    public override void Shoot()
     {
         Debug.Log("The Exploder enemy type has no implementation of Shoot(). Use Explode() instead.");
     }
