@@ -19,6 +19,11 @@ public class Player : PlayableObject
         health = new Health(100.0f, 0.5f, 100.0f);
     }
 
+    /// <summary>
+    /// Moves player object in a specified direction and rotates player towards a specified target
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <param name="target"></param>
     public override void Move(Vector2 direction, Vector2 target)
     {
         _rbPlayer.velocity = direction * _speed * Time.deltaTime;
