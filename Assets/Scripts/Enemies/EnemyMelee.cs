@@ -4,27 +4,52 @@ using UnityEngine;
 
 public class EnemyMelee : Enemy
 {
-    private int _attackInterval;
+    [SerializeField] private float _attackRange;
+    [SerializeField] private float _attackTime;
 
-    public EnemyMelee(string enemyName, int attackInterval) : base(enemyName, EnemyType.Melee)
-    {
-        _attackInterval = attackInterval;
-    }
+    private float _timer;
 
-    // Start is called before the first frame update
-    void Start()
+    public EnemyMelee(string enemyName) : base(enemyName, EnemyType.Melee)
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void GetDamage(float damageValue)
     {
-        
+        health.RemoveHealth(damageValue);
     }
 
-    public void Attack()
+    public override void Attack(float interval)
     {
-        base.Attack(_attackInterval);
+        if (_timer <= interval)
+        {
+            _timer += Time.deltaTime;
+        }
+        else
+        {
+            _timer = 0;
+            target.GetComponent<IDamageable>().GetDamage(1);
+        }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        health = new Health(1, 0, 1);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (target == null)
+        {
+            return;
+        }
+
+        if (Vector2.Distance(transform.position, target.position) < _attackRange)
+        {
+            Attack(_attackTime);
+        }
     }
 }

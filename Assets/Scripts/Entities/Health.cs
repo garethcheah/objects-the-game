@@ -20,6 +20,11 @@ public class Health
         _healthRegenRate = healthRegenRate;
     }
 
+    public float GetHealth()
+    {
+        return _currentHealth;
+    }
+
     public void AddHealth(float value)
     {
         _currentHealth += value;
