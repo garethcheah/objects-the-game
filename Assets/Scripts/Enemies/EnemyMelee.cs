@@ -8,15 +8,11 @@ public class EnemyMelee : Enemy
     [SerializeField] private float _attackTime;
 
     private float _timer;
+    private float _enemySpeed;
 
     public EnemyMelee(string enemyName) : base(enemyName, EnemyType.Melee)
     {
         
-    }
-
-    public override void GetDamage(float damageValue)
-    {
-        health.RemoveHealth(damageValue);
     }
 
     public override void Attack(float interval)
@@ -28,14 +24,21 @@ public class EnemyMelee : Enemy
         else
         {
             _timer = 0;
-            target.GetComponent<IDamageable>().GetDamage(1);
+            target.GetComponent<IDamageable>().GetDamage(weapon.GetDamage());
+            Debug.Log("_weapon.GetDamage()=" + weapon.GetDamage().ToString());
         }
     }
 
     protected override void Start()
     {
         base.Start();
+        _enemySpeed = speed;
+
+        // Set enemy health
         health = new Health(1, 0, 1);
+
+        // Set enemy weapon
+        weapon = new Weapon("Melee Weapon", 1.0f, 0.0f);
     }
 
     protected override void Update()
@@ -43,13 +46,16 @@ public class EnemyMelee : Enemy
         base.Update();
 
         if (target == null)
-        {
             return;
-        }
 
         if (Vector2.Distance(transform.position, target.position) < _attackRange)
         {
+            speed = 0.0f;
             Attack(_attackTime);
+        }
+        else
+        {
+            speed = _enemySpeed;
         }
     }
 }

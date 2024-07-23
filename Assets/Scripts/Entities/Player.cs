@@ -1,10 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : PlayableObject
 {
+    public Action<float> OnHealthUpdate;
+
     [SerializeField] private float _speed;
+    [SerializeField] private float _weaponDamage = 1.0f;
+    [SerializeField] private float _bulletSpeed = 15.0f;
+    [SerializeField] private Bullet _bullet;
 
     private string _playerName;
     private Vector3 _direction;
@@ -16,7 +22,12 @@ public class Player : PlayableObject
     {
         _mainCamera = Camera.main;
         _rbPlayer = GetComponent<Rigidbody2D>();
+
+        // Set player health
         health = new Health(100.0f, 0.5f, 100.0f);
+
+        // Set player _weapon
+        weapon = new Weapon("Player Weapon", _weaponDamage, _bulletSpeed);
     }
 
     /// <summary>
@@ -32,13 +43,14 @@ public class Player : PlayableObject
         target.x -= playerScreenPosition.x;
         target.y -= playerScreenPosition.y;
 
-        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg - 90.0f; // Add 90 degree offset to align exit point for bullets to the right position of player sprite
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     public override void Shoot()
     {
         Debug.Log("Player shooting.");
+        weapon.Shoot(_bullet, this, "Enemy");
     }
 
     public override void Attack(float interval)
@@ -49,10 +61,17 @@ public class Player : PlayableObject
     public override void Die()
     {
         Debug.Log("Player dead.");
+        Destroy(gameObject);
     }
 
-    public override void GetDamage(float damageValue)
-    {
-        throw new System.NotImplementedException();
-    }
+    // This method is already defined in PlayableObject - Removing for now
+    //public override void GetDamage(float damageValue)
+    //{
+    //    _health.RemoveHealth(damageValue);
+
+    //    if (_health.GetHealth() <= 0)
+    //    {
+    //        Die();
+    //    }
+    //}
 }

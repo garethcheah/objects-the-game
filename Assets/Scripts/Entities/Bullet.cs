@@ -7,6 +7,15 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _damage;
     [SerializeField] private float _speed;
 
+    private string targetTag;
+
+    public void SetBullet(float damage, string targetTag, float speed = 15)
+    {
+        this._damage = damage;
+        this._speed = speed;
+        this.targetTag = targetTag;
+    }
+
     private void Update()
     {
         Move();
@@ -14,7 +23,7 @@ public class Bullet : MonoBehaviour
 
     private void Move()
     {
-        transform.Translate(Vector2.right * _speed * Time.deltaTime);
+        transform.Translate(Vector2.up * _speed * Time.deltaTime);
     }
 
     private void Damage(IDamageable damageable)
@@ -34,7 +43,10 @@ public class Bullet : MonoBehaviour
     {
         Debug.Log("Collided with " + collision.gameObject.name);
 
-        IDamageable damageable = collision.GetComponent<IDamageable>();
-        Damage(damageable);
+        if (collision.gameObject.CompareTag(targetTag))
+        {
+            IDamageable damageable = collision.GetComponent<IDamageable>();
+            Damage(damageable);
+        }
     }
 }

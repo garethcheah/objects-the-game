@@ -13,7 +13,7 @@ public class EnemyExploder : Enemy
 
     public override void Shoot()
     {
-        Debug.Log("The Exploder enemy type has no implementation of Shoot(). Use Explode() instead.");
+        Debug.Log("The Exploder _enemyTemplate type has no implementation of Shoot(). Use Explode() instead.");
     }
 
     public void Explode()

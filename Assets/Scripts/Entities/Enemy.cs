@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Enemy : PlayableObject
 {
-    public Transform target;
+    protected Transform target;
+
+    [SerializeField] protected float speed;
 
     private string _enemyName;
-    private float _speed;
     private EnemyType _enemyType;
 
     public Enemy(string enemyName, EnemyType enemyType)
@@ -21,19 +22,24 @@ public class Enemy : PlayableObject
         Debug.Log($"Enemy {_enemyName} move towards {this.target.name}.");
     }
 
-    public override void Move(Vector2 direction)
+    public override void Move(Vector2 target)
     {
-        direction.x = transform.position.x;
-        direction.y = transform.position.y;
+        Vector2 direction = target - new Vector2(transform.position.x, transform.position.y);
+
+        direction.Normalize();
+        //target.x = transform.position.x;
+        //target.y = transform.position.y;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        transform.position = Vector2.MoveTowards(this.transform.position, target, speed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, angle);
-        transform.Translate(Vector2.right * _speed * Time.deltaTime);
+        //transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
     public override void Move(float speed)
     {
-        transform.Translate(Vector2.right * _speed * Time.deltaTime);
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
     public override void Shoot()
@@ -48,13 +54,21 @@ public class Enemy : PlayableObject
 
     public override void Die()
     {
-        Debug.Log($"Enemy {_enemyName} dead.");
+        Destroy(gameObject);
     }
 
-    public override void GetDamage(float damageValue)
-    {
-        throw new System.NotImplementedException();
-    }
+    // This method is already defined in PlayableObject - Removing for now
+    //public override void GetDamage(float damageValue)
+    //{
+    //    Debug.Log("Enemy damaged.");
+
+    //    _health.RemoveHealth(damageValue);
+
+    //    if (_health.GetHealth() <= 0)
+    //    {
+    //        Die();
+    //    }
+    //}
 
     protected virtual void Start()
     {
@@ -69,7 +83,7 @@ public class Enemy : PlayableObject
         }
         else
         {
-            Move(_speed);
+            Move(speed);
         }
     }
 }
