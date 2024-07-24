@@ -19,13 +19,5 @@ public abstract class PlayableObject : MonoBehaviour, IDamageable
 
     public abstract void Die();
 
-    public virtual void GetDamage(float damageValue)
-    {
-        health.RemoveHealth(damageValue);
-
-        if (health.GetHealth() <= 0)
-        {
-            Die();
-        }
-    }
+    public abstract void GetDamage(float damageValue);
 }

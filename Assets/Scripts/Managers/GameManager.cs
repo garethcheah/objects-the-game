@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public ScoreManager scoreManager;
+    public PickUpSpawner pickUpSpawner;
+
     [Header("Game Entities")]
     [SerializeField] private GameObject _enemyTemplate;
     [SerializeField] private Transform[] _spawnPositions;
@@ -11,6 +15,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Variables")]
     [SerializeField] private float _enemySpawnRate;
 
+    private Player _player;
     private GameObject _tempEnemy;
     private bool _isEnemySpawning;
 
@@ -24,6 +29,28 @@ public class GameManager : MonoBehaviour
         return _instance;
     }
 
+    public void NotifyDeath(Enemy enemy)
+    {
+        pickUpSpawner.SpawnPickup(enemy.transform.position);
+    }
+
+    public void FindPlayer()
+    {
+        try
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.Log("No player in the scene. Exception: " + e.Message);
+        }
+    }
+
+    public Player GetPlayer()
+    {
+        return _player;
+    }
+
     private void Awake()
     {
         SetInstance();
@@ -31,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        FindPlayer();
         _isEnemySpawning = true;
         StartCoroutine(EnemySpawner());
     }
@@ -61,6 +89,6 @@ public class GameManager : MonoBehaviour
     private void CreateEnemy()
     {
         _tempEnemy = Instantiate(_enemyTemplate);
-        _tempEnemy.transform.position = _spawnPositions[Random.Range(0, _spawnPositions.Length)].position;
+        _tempEnemy.transform.position = _spawnPositions[UnityEngine.Random.Range(0, _spawnPositions.Length)].position;
     }
 }

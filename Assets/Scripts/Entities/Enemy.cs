@@ -54,21 +54,21 @@ public class Enemy : PlayableObject
 
     public override void Die()
     {
+        GameManager.GetInstance().NotifyDeath(this);
         Destroy(gameObject);
     }
 
-    // This method is already defined in PlayableObject - Removing for now
-    //public override void GetDamage(float damageValue)
-    //{
-    //    Debug.Log("Enemy damaged.");
+    public override void GetDamage(float damageValue)
+    {
+        Debug.Log("Enemy damaged.");
 
-    //    _health.RemoveHealth(damageValue);
+        health.RemoveHealth(damageValue);
 
-    //    if (_health.GetHealth() <= 0)
-    //    {
-    //        Die();
-    //    }
-    //}
+        if (health.GetHealth() <= 0)
+        {
+            Die();
+        }
+    }
 
     protected virtual void Start()
     {

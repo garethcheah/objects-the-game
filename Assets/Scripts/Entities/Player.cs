@@ -64,14 +64,13 @@ public class Player : PlayableObject
         Destroy(gameObject);
     }
 
-    // This method is already defined in PlayableObject - Removing for now
-    //public override void GetDamage(float damageValue)
-    //{
-    //    _health.RemoveHealth(damageValue);
+    public override void GetDamage(float damageValue)
+    {
+        health.RemoveHealth(damageValue);
 
-    //    if (_health.GetHealth() <= 0)
-    //    {
-    //        Die();
-    //    }
-    //}
+        if (health.GetHealth() <= 0)
+        {
+            Die();
+        }
+    }
 }
