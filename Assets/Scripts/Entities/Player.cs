@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : PlayableObject
 {
     public Action<float> OnHealthUpdate;
+    public float currentHealth;
 
     [SerializeField] private float _speed = 100.0f;
     [SerializeField] private float _weaponDamage = 1.0f;
@@ -36,6 +37,7 @@ public class Player : PlayableObject
     private void Update()
     {
         _timer += Time.deltaTime;
+        currentHealth = health.GetHealth();
     }
 
     /// <summary>

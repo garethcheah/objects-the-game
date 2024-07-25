@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399354909246e194f9f11743d497781c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 0
   _speed: 100
   _weaponDamage: 1
   _bulletSpeed: 15
@@ -350,8 +351,8 @@ Camera:
   m_GameObject: {fileID: 356473458}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.024919821, g: 0.025012117, b: 0.025157154, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -788,7 +789,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreManager: {fileID: 1913313838}
   pickUpSpawner: {fileID: 1913313839}
-  _enemyTemplate: {fileID: 2199530661661176685, guid: c848c076decbd844eb82ff891e4fd833, type: 3}
+  _enemyTemplates:
+  - {fileID: 6811208409803304202, guid: 42c537b73a85d4a4bb463a2f86fdc9fe, type: 3}
   _spawnPositions:
   - {fileID: 753011880}
   - {fileID: 477807744}

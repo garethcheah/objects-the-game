@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public PickUpSpawner pickUpSpawner;
 
     [Header("Game Entities")]
-    [SerializeField] private GameObject _enemyTemplate;
+    [SerializeField] private GameObject[] _enemyTemplates;
     [SerializeField] private Transform[] _spawnPositions;
 
     [Header("Game Variables")]
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     private void CreateEnemy()
     {
-        _tempEnemy = Instantiate(_enemyTemplate);
+        _tempEnemy = Instantiate(_enemyTemplates[UnityEngine.Random.Range(0, _enemyTemplates.Length)]);
         _tempEnemy.transform.position = _spawnPositions[UnityEngine.Random.Range(0, _spawnPositions.Length)].position;
     }
 }

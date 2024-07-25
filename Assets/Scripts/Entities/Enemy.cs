@@ -72,7 +72,11 @@ public class Enemy : PlayableObject
 
     protected virtual void Start()
     {
-        target = GameObject.FindWithTag("Player").transform;
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            target = player.transform;
+        }
     }
 
     protected virtual void Update()
