@@ -6,7 +6,7 @@ public class Enemy : PlayableObject
 {
     protected Transform target;
 
-    [SerializeField] protected float speed;
+    [SerializeField] protected float speed = 2.0f;
 
     private string _enemyName;
     private EnemyType _enemyType;

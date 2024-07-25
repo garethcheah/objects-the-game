@@ -312,6 +312,7 @@ MonoBehaviour:
   _speed: 100
   _weaponDamage: 1
   _bulletSpeed: 15
+  _shootingRate: 0.2
   _bullet: {fileID: 4024393071885866918, guid: f5a1b5f51dcb65c4da63f04da6d58722, type: 3}
 --- !u!1 &356473458
 GameObject:

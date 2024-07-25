@@ -7,12 +7,14 @@ public class Player : PlayableObject
 {
     public Action<float> OnHealthUpdate;
 
-    [SerializeField] private float _speed;
+    [SerializeField] private float _speed = 100.0f;
     [SerializeField] private float _weaponDamage = 1.0f;
     [SerializeField] private float _bulletSpeed = 15.0f;
+    [SerializeField] private float _shootingRate = 0.2f;
     [SerializeField] private Bullet _bullet;
 
     private string _playerName;
+    private float _timer;
     private Vector3 _direction;
     private Camera _mainCamera;
     private Rigidbody2D _rbPlayer;
@@ -22,12 +24,18 @@ public class Player : PlayableObject
     {
         _mainCamera = Camera.main;
         _rbPlayer = GetComponent<Rigidbody2D>();
+        _timer = _shootingRate;
 
         // Set player health
         health = new Health(100.0f, 0.5f, 100.0f);
 
         // Set player _weapon
         weapon = new Weapon("Player Weapon", _weaponDamage, _bulletSpeed);
+    }
+
+    private void Update()
+    {
+        _timer += Time.deltaTime;
     }
 
     /// <summary>
@@ -49,8 +57,12 @@ public class Player : PlayableObject
 
     public override void Shoot()
     {
-        Debug.Log("Player shooting.");
-        weapon.Shoot(_bullet, this, "Enemy");
+        if (_timer >= _shootingRate)
+        {
+            Debug.Log("Player shooting.");
+            _timer = 0.0f;
+            weapon.Shoot(_bullet, this, "Enemy");
+        }
     }
 
     public override void Attack(float interval)

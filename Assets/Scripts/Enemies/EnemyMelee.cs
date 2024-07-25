@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyMelee : Enemy
 {
-    [SerializeField] private float _attackRange;
-    [SerializeField] private float _attackTime;
+    [SerializeField] private float _attackRange = 1.0f;
+    [SerializeField] private float _attackTime = 0.25f;
 
     private float _timer;
     private float _enemySpeed;
@@ -23,7 +23,7 @@ public class EnemyMelee : Enemy
         }
         else
         {
-            _timer = 0;
+            _timer = 0.0f;
             target.GetComponent<IDamageable>().GetDamage(weapon.GetDamage());
             Debug.Log("_weapon.GetDamage()=" + weapon.GetDamage().ToString());
         }
