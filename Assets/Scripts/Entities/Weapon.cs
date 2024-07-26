@@ -20,9 +20,9 @@ public class Weapon
         _bulletSpeed = bulletSpeed;
     }
 
-    public void Shoot(Bullet bullet, PlayableObject player, string targetTag, float timeToDie = 5.0f)
+    public void Shoot(Bullet bullet, PlayableObject playableObject, string targetTag, float timeToDie = 5.0f)
     {
-        Bullet tempBullet = GameObject.Instantiate(bullet, player.transform.position, player.transform.rotation);
+        Bullet tempBullet = GameObject.Instantiate(bullet, playableObject.transform.position, playableObject.transform.rotation);
 
         tempBullet.SetBullet(_damage, targetTag, _bulletSpeed);
         GameObject.Destroy(tempBullet.gameObject, timeToDie);

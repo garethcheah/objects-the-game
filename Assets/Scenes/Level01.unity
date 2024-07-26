@@ -790,7 +790,7 @@ MonoBehaviour:
   scoreManager: {fileID: 1913313838}
   pickUpSpawner: {fileID: 1913313839}
   _enemyTemplates:
-  - {fileID: 6811208409803304202, guid: 42c537b73a85d4a4bb463a2f86fdc9fe, type: 3}
+  - {fileID: 6811208409803304202, guid: dfbaa101634e42741b4a892f7731c713, type: 3}
   _spawnPositions:
   - {fileID: 753011880}
   - {fileID: 477807744}

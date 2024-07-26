@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyExploder : Enemy
 {
-    [SerializeField] private float explodeRange = 10.0f;
+    [SerializeField] private float _explodeRange = 1.5f;
     [SerializeField] private float _explodeDamage = 50.0f;
 
     public EnemyExploder(string enemyName) : base(enemyName, EnemyType.Exploder)
@@ -33,7 +33,7 @@ public class EnemyExploder : Enemy
         if (target == null)
             return;
 
-        if (Vector2.Distance(transform.position, target.position) <= explodeRange)
+        if (Vector2.Distance(transform.position, target.position) <= _explodeRange)
         {
             Explode();
         }
