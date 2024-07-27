@@ -30,7 +30,7 @@ public class Enemy : PlayableObject
         //target.x = transform.position.x;
         //target.y = transform.position.y;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90.0f;
 
         transform.position = Vector2.MoveTowards(this.transform.position, target, speed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -56,6 +56,7 @@ public class Enemy : PlayableObject
     {
         GameManager.GetInstance().NotifyDeath(this);
         Destroy(gameObject);
+        GameManager.GetInstance().scoreManager.IncrementScore();
     }
 
     public override void GetDamage(float damageValue)

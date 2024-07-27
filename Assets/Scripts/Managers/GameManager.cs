@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _playerTemplate;
 
     [Header("Game Variables")]
-    [SerializeField] private float _enemySpawnRate;
+    [SerializeField] private float _enemySpawnRate = 0.5f;
 
     private Player _player;
     private GameObject _tempEnemy;

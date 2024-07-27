@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyMachineGun : Enemy
 {
-    [SerializeField] private float _shootingRange = 10.0f;
+    [SerializeField] private float _shootingRange = 5.0f;
     [SerializeField] private float _shootingRate = 0.2f;
     [SerializeField] private float _weaponDamage = 1.0f;
-    [SerializeField] private float _bulletSpeed = 15.0f;
+    [SerializeField] private float _bulletSpeed = 5.0f;
     [SerializeField] private Bullet _bullet;
 
     private float _timer;

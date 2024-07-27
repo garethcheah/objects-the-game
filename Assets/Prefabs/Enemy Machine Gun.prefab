@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5844511423704072255}
   - component: {fileID: 6995838675728800816}
   - component: {fileID: 4246331495482786755}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy Machine Gun
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  _shootingRange: 10
+  _shootingRange: 5
   _shootingRate: 0.2
   _weaponDamage: 1
-  _bulletSpeed: 15
-  _bullet: {fileID: 4024393071885866918, guid: f5a1b5f51dcb65c4da63f04da6d58722, type: 3}
+  _bulletSpeed: 5
+  _bullet: {fileID: 4024393071885866918, guid: 27cc92a7a61730a43b9f7932ab3f0f20, type: 3}
