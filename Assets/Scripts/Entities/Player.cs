@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class Player : PlayableObject
 {
-    public Action<float> OnHealthUpdate;
-    public float currentHealth;
+    public Action OnDeath;
 
     [SerializeField] private float _speed = 100.0f;
     [SerializeField] private float _weaponDamage = 1.0f;
@@ -14,31 +13,9 @@ public class Player : PlayableObject
     [SerializeField] private float _shootingRate = 0.2f;
     [SerializeField] private Bullet _bullet;
 
-    private string _playerName;
     private float _timer;
-    private Vector3 _direction;
     private Camera _mainCamera;
     private Rigidbody2D _rbPlayer;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _mainCamera = Camera.main;
-        _rbPlayer = GetComponent<Rigidbody2D>();
-        _timer = _shootingRate;
-
-        // Set player health
-        health = new Health(100.0f, 0.5f, 100.0f);
-
-        // Set player _weapon
-        weapon = new Weapon("Player Weapon", _weaponDamage, _bulletSpeed);
-    }
-
-    private void Update()
-    {
-        _timer += Time.deltaTime;
-        currentHealth = health.GetHealth();
-    }
 
     /// <summary>
     /// Moves player object in a specified direction and rotates player towards a specified target
@@ -69,12 +46,12 @@ public class Player : PlayableObject
 
     public override void Attack(float interval)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void Die()
     {
-        Debug.Log("Player dead.");
+        OnDeath?.Invoke();
         Destroy(gameObject);
     }
 
@@ -86,5 +63,24 @@ public class Player : PlayableObject
         {
             Die();
         }
+    }
+
+    private void Awake()
+    {
+        _mainCamera = Camera.main;
+        _rbPlayer = GetComponent<Rigidbody2D>();
+        _timer = _shootingRate;
+
+        // Set player health
+        health = new Health(100.0f, 0.5f, 100.0f);
+
+        // Set player _weapon
+        weapon = new Weapon("Player Weapon", _weaponDamage, _bulletSpeed);
+    }
+
+    private void Update()
+    {
+        _timer += Time.deltaTime;
+        health.RegenHealth();
     }
 }

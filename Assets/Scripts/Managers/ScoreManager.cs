@@ -35,12 +35,18 @@ public class ScoreManager : MonoBehaviour
         {
             _highScore = _score;
             OnHighScoreUpdated?.Invoke();
-            SetHighScore();
         }
+    }
+
+    public void OnGameStart()
+    {
+        _score = 0;
     }
 
     private void Start()
     {
         _highScore = PlayerPrefs.GetInt("HighScore");
+        OnHighScoreUpdated?.Invoke();
+        GameManager.GetInstance().OnGameStart += OnGameStart;
     }
 }

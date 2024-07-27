@@ -8,9 +8,13 @@ public class GameManager : MonoBehaviour
     public ScoreManager scoreManager;
     public PickUpSpawner pickUpSpawner;
 
+    public Action OnGameStart;
+    public Action OnGameOver;
+
     [Header("Game Entities")]
     [SerializeField] private GameObject[] _enemyTemplates;
     [SerializeField] private Transform[] _spawnPositions;
+    [SerializeField] private GameObject _playerTemplate;
 
     [Header("Game Variables")]
     [SerializeField] private float _enemySpawnRate;
@@ -18,6 +22,7 @@ public class GameManager : MonoBehaviour
     private Player _player;
     private GameObject _tempEnemy;
     private bool _isEnemySpawning;
+    //private bool _isPlaying;
 
     /// <summary>
     /// Singleton
@@ -27,6 +32,49 @@ public class GameManager : MonoBehaviour
     public static GameManager GetInstance()
     {
         return _instance;
+    }
+
+    public void StartGame()
+    {
+        _player = Instantiate(_playerTemplate, Vector2.zero, Quaternion.identity).GetComponent<Player>();
+        _player.OnDeath += StopGame;
+        //_isPlaying = true;
+
+        OnGameStart?.Invoke();
+        StartCoroutine(GameStarter());
+    }
+
+    IEnumerator GameStarter()
+    {
+        yield return new WaitForSeconds(2.0f);
+        _isEnemySpawning = true;
+        StartCoroutine(EnemySpawner());
+    }
+
+    public void StopGame()
+    {
+        _isEnemySpawning = false;
+        scoreManager.SetHighScore();
+        StartCoroutine(GameStopper());
+    }
+
+    IEnumerator GameStopper()
+    {
+        _isEnemySpawning = false;
+        yield return new WaitForSeconds(2.0f);
+        //_isPlaying = false;
+
+        foreach (Enemy enemy in FindObjectsOfType(typeof(Enemy)))
+        {
+            Destroy(enemy.gameObject);
+        }
+
+        foreach (PickUp pickUp in FindObjectsOfType(typeof(PickUp)))
+        {
+            Destroy(pickUp.gameObject);
+        }
+
+        OnGameOver?.Invoke();
     }
 
     public void NotifyDeath(Enemy enemy)
@@ -59,8 +107,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         FindPlayer();
-        _isEnemySpawning = true;
-        StartCoroutine(EnemySpawner());
     }
 
     private void SetInstance()

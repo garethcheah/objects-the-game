@@ -5,46 +5,54 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _txtHealth;
-    [SerializeField] private TMP_Text _txtScore;
-    [SerializeField] private TMP_Text _txtHighScore;
+    [Header("Menu")]
+    [SerializeField] private GameObject _menuPanel;
+    [SerializeField] private GameObject _textGameOver;
+    [SerializeField] private TMP_Text _textMenuHighScore;
+
+    [Header("Gameplay")]
+    [SerializeField] private TMP_Text _textHealth;
+    [SerializeField] private TMP_Text _textScore;
+    [SerializeField] private TMP_Text _textHighScore;
     
     private Player _player;
     private ScoreManager _scoreManager;
 
     public void UpdateHealth(float currentHealth)
     {
-        _txtHealth.SetText(currentHealth.ToString());
+        _textHealth.SetText(currentHealth.ToString());
     }
 
     public void UpdateScore()
     {
-        _txtScore.SetText(_scoreManager.GetScore().ToString());
+        _textScore.SetText(_scoreManager.GetScore().ToString());
     }
 
     public void UpdateHighScore()
     {
-        _txtHighScore.SetText(_scoreManager.GetHighScore().ToString());
+        int highScore = _scoreManager.GetHighScore();
+        _textHighScore.SetText(highScore.ToString());
+        _textMenuHighScore.SetText($"High Score: {highScore.ToString()}");
     }
 
-    // Start is called before the first frame update
-    private void Start()
+    public void GameStarted()
+    {
+        _player = GameManager.GetInstance().GetPlayer();
+        _player.health.OnHealthUpdate += UpdateHealth;
+        _menuPanel.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        _menuPanel.SetActive(true);
+        _textGameOver.SetActive(true);
+    }
+
+    private void Awake()
     {
         _scoreManager = GameManager.GetInstance().scoreManager;
-        _player = GameManager.GetInstance().GetPlayer();
 
-        //Subscribe to Action
-        _player.health.OnHealUpdate += UpdateHealth;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
-    }
-
-    private void OnDisable()
-    {
-        _player.health.OnHealUpdate -= UpdateHealth;
+        GameManager.GetInstance().OnGameStart += GameStarted;
+        GameManager.GetInstance().OnGameOver += GameOver;
     }
 }

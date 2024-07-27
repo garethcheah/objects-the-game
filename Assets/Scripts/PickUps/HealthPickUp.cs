@@ -26,4 +26,12 @@ public class HealthPickUp : PickUp, IDamageable
         // This allows player to shoot  the pickups to collect them
         OnPicked();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            OnPicked();
+        }
+    }
 }

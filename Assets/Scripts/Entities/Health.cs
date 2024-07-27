@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Health
 {
-    public Action<float> OnHealUpdate;
+    public Action<float> OnHealthUpdate;
 
     private float _currentHealth;
     private float _maxHealth;
@@ -13,11 +13,18 @@ public class Health
 
     public Health() { }
 
+    public Health(float maxHealth)
+    {
+        _maxHealth = maxHealth;
+    }
+
     public Health(float maxHealth, float healthRegenRate, float currentHealth = 100)
     {
         _currentHealth = currentHealth;
         _maxHealth = maxHealth;
         _healthRegenRate = healthRegenRate;
+
+        OnHealthUpdate?.Invoke(_currentHealth);
     }
 
     public float GetHealth()
@@ -36,13 +43,13 @@ public class Health
     public void AddHealth(float value)
     {
         _currentHealth = Mathf.Min(_maxHealth, _currentHealth + value);
-        OnHealUpdate?.Invoke(_currentHealth);
+        OnHealthUpdate?.Invoke(_currentHealth);
     }
 
     public void RemoveHealth(float value)
     {
         _currentHealth = Mathf.Max(0, _currentHealth - value);
-        OnHealUpdate?.Invoke(_currentHealth);
+        OnHealthUpdate?.Invoke(_currentHealth);
     }
 
     public void RegenHealth()
