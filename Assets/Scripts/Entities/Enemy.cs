@@ -56,7 +56,6 @@ public class Enemy : PlayableObject
     {
         GameManager.GetInstance().NotifyDeath(this);
         Destroy(gameObject);
-        GameManager.GetInstance().scoreManager.IncrementScore();
     }
 
     public override void GetDamage(float damageValue)
@@ -68,6 +67,7 @@ public class Enemy : PlayableObject
         if (health.GetHealth() <= 0)
         {
             Die();
+            GameManager.GetInstance().scoreManager.IncrementScore();
         }
     }
 
