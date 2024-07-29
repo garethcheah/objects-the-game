@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHealth(float currentHealth)
     {
-        _textHealth.SetText(currentHealth.ToString());
+        _textHealth.SetText($"Health: {currentHealth.ToString("0.00")}");
     }
 
     public void UpdateScore()
