@@ -21,7 +21,7 @@ public class EnemySniper : Enemy
 
     public override void Shoot()
     {
-        if (_timer >= _shootingRate)
+        if (_laserAim.isVisible && _timer >= _shootingRate)
         {
             _timer = 0.0f;
             weapon.Shoot(_bullet, this, "Player");
@@ -48,16 +48,16 @@ public class EnemySniper : Enemy
         _timer += Time.deltaTime;
 
         if (target == null)
+        {
+            DisableLaserAim();
             return;
+        }
 
         if (Vector2.Distance(transform.position, target.position) <= _shootingRange)
         {
             speed = 0.0f;
             EnableLaserAim();
-            if (_laserAim.isVisible)
-            {
-                Shoot();
-            }
+            Shoot();
         }
         else
         {
