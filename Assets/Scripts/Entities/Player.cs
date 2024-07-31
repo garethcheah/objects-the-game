@@ -67,19 +67,10 @@ public class Player : PlayableObject
         }
     }
 
-    public bool IsShieldActive()
-    {
-        return _shield.activeSelf;
-    }
-
-    public void EnableShield()
+    public void EnableShield(float duration)
     {
         _shield.SetActive(true);
-    }
-
-    public void DisableShield()
-    {
-        _shield.SetActive(false);
+        Invoke("DisableShield", duration);
     }
 
     private void Awake()
@@ -101,5 +92,10 @@ public class Player : PlayableObject
     {
         _timer += Time.deltaTime;
         health.RegenHealth();
+    }
+
+    private void DisableShield()
+    {
+        _shield.SetActive(false);
     }
 }

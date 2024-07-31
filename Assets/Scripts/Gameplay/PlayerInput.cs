@@ -25,18 +25,6 @@ public class PlayerInput : MonoBehaviour
         {
             player.Shoot();
         }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (!player.IsShieldActive())
-            {
-                player.EnableShield();
-            }
-            else
-            {
-                player.DisableShield();
-            }
-        }
     }
 
     private void FixedUpdate()

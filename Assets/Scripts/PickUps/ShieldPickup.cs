@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldPickup : Pickup, IDamageable
+public class ShieldPickup : Pickup
 {
+    [SerializeField] private float _shieldDuration = 30.0f;
+
     public override void OnPicked()
     {
         base.OnPicked();
 
         var player = GameManager.GetInstance().GetPlayer();
 
-        player.EnableShield();
-    }
-
-    public void GetDamage(float damage)
-    {
-        // This allows player to shoot  the pickups to collect them
-        OnPicked();
+        player.EnableShield(_shieldDuration);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
