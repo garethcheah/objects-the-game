@@ -65,6 +65,10 @@ public class Player : PlayableObject
         {
             Die();
         }
+        else if (_shield.activeSelf && damageValue > 20.0f)
+        {
+            DisableShield();
+        }
     }
 
     public void EnableShield(float duration)

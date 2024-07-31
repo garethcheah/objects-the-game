@@ -2074,7 +2074,7 @@ MonoBehaviour:
   pickupProbability: 0.25
   _pickups:
   - pickup: {fileID: 2522755038243234300, guid: c86a2b93b5fdf0247941fd531efc6a17, type: 3}
-    spawnWeight: 5
+    spawnWeight: 2
   - pickup: {fileID: -731323141814235675, guid: 9bd9a1a2b2e598d4294ec823945889f8, type: 3}
     spawnWeight: 1
 --- !u!114 &1913313840
