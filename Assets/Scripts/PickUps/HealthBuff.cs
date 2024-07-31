@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPickUp : PickUp, IDamageable
+public class HealthPickup : Pickup, IDamageable
 {
     [SerializeField] private float _healthMin;
     [SerializeField] private float _healthMax;

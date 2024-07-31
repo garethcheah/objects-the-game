@@ -2001,7 +2001,7 @@ MonoBehaviour:
   - {fileID: 365209916}
   - {fileID: 2075063681}
   _playerTemplate: {fileID: 2184828745764243091, guid: b2d60836c5dcc3e418e0ccf69b07dc01, type: 3}
-  _enemySpawnRate: 0.5
+  _enemySpawnRate: 0.2
 --- !u!4 &1913313837
 Transform:
   m_ObjectHideFlags: 0
@@ -2071,10 +2071,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e7772f7a0b0bd4cbd1356bc6b1ba0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickUpProbability: 0.5
-  _pickUps:
-  - pickUp: {fileID: 2522755038243234300, guid: c86a2b93b5fdf0247941fd531efc6a17, type: 3}
-    spawnWeight: 5
+  pickupProbability: 0
+  _pickups:
+  - pickup: {fileID: 0}
+    spawnWeight: 2
+  - pickup: {fileID: -731323141814235675, guid: 9bd9a1a2b2e598d4294ec823945889f8, type: 3}
+    spawnWeight: 1
 --- !u!114 &1913313840
 MonoBehaviour:
   m_ObjectHideFlags: 0

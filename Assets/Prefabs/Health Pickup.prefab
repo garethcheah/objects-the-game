@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6118587371681219069}
   - component: {fileID: 5199734938622582515}
-  - component: {fileID: 2522755038243234300}
   - component: {fileID: 4320909315172395813}
+  - component: {fileID: 2522755038243234300}
   m_Layer: 0
   m_Name: Health Pickup
   m_TagString: Enemy
@@ -86,20 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2522755038243234300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3231452704918078942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39c96322704550429b43759c4d8e2b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthMin: 5
-  _healthMax: 15
 --- !u!70 &4320909315172395813
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -133,5 +119,19 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.99999994, y: 1.9999999}
+  m_Size: {x: 1, y: 1.9999999}
   m_Direction: 0
+--- !u!114 &2522755038243234300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3231452704918078942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39c96322704550429b43759c4d8e2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthMin: 5
+  _healthMax: 15

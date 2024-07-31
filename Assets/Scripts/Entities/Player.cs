@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : PlayableObject
 {
@@ -16,6 +17,7 @@ public class Player : PlayableObject
     private float _timer;
     private Camera _mainCamera;
     private Rigidbody2D _rbPlayer;
+    private GameObject _shield;
 
     /// <summary>
     /// Moves player object in a specified direction and rotates player towards a specified target
@@ -65,11 +67,28 @@ public class Player : PlayableObject
         }
     }
 
+    public bool IsShieldActive()
+    {
+        return _shield.activeSelf;
+    }
+
+    public void EnableShield()
+    {
+        _shield.SetActive(true);
+    }
+
+    public void DisableShield()
+    {
+        _shield.SetActive(false);
+    }
+
     private void Awake()
     {
         _mainCamera = Camera.main;
         _rbPlayer = GetComponent<Rigidbody2D>();
         _timer = _shootingRate;
+        _shield = GameObject.Find("Shield");
+        _shield.SetActive(false);
 
         // Set player health
         health = new Health(100.0f, 0.5f, 100.0f);

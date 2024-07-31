@@ -2,49 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpSpawner : MonoBehaviour
+public class PickupSpawner : MonoBehaviour
 {
-    [Range(0.0f, 1.0f)] public float pickUpProbability;
+    [Range(0.0f, 1.0f)] public float pickupProbability;
 
-    [SerializeField] private PickUpSpawn[] _pickUps;
+    [SerializeField] private PickupSpawn[] _pickups;
 
-    private List<PickUp> _pickUpPool = new List<PickUp>();
-    private PickUp _chosenPickUp;
+    private List<Pickup> _pickupPool = new List<Pickup>();
+    private Pickup _chosenPickup;
 
     public void SpawnPickup(Vector2 position)
     {
-        if (_pickUpPool.Count <= 0)
+        if (_pickupPool.Count <= 0)
             return;
 
-        if (Random.Range(0.0f, 1.0f) < pickUpProbability)
+        if (Random.Range(0.0f, 1.0f) < pickupProbability)
         {
-            _chosenPickUp = _pickUpPool[Random.Range(0, _pickUpPool.Count)];
-            Instantiate(_chosenPickUp, position, Quaternion.identity);
+            _chosenPickup = _pickupPool[Random.Range(0, _pickupPool.Count)];
+            Instantiate(_chosenPickup, position, Quaternion.identity);
         }
     }
-    
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        foreach (PickUpSpawn spawn in _pickUps)
+        foreach (PickupSpawn spawn in _pickups)
         {
             for (int i = 0; i < spawn.spawnWeight; i++)
             {
-                _pickUpPool.Add(spawn.pickUp);
+                _pickupPool.Add(spawn.pickup);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
 
 [System.Serializable]
-public struct PickUpSpawn
+public struct PickupSpawn
 {
-    public PickUp pickUp;
+    public Pickup pickup;
     public int spawnWeight;
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public ScoreManager scoreManager;
-    public PickUpSpawner pickUpSpawner;
+    public PickupSpawner pickUpSpawner;
 
     public Action OnGameStart;
     public Action OnGameOver;
@@ -69,9 +69,9 @@ public class GameManager : MonoBehaviour
             Destroy(enemy.gameObject);
         }
 
-        foreach (PickUp pickUp in FindObjectsOfType(typeof(PickUp)))
+        foreach (Pickup pickup in FindObjectsOfType(typeof(Pickup)))
         {
-            Destroy(pickUp.gameObject);
+            Destroy(pickup.gameObject);
         }
 
         OnGameOver?.Invoke();
