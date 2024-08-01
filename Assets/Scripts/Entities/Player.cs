@@ -13,11 +13,14 @@ public class Player : PlayableObject
     [SerializeField] private float _bulletSpeed = 15.0f;
     [SerializeField] private float _shootingRate = 0.2f;
     [SerializeField] private Bullet _bullet;
+    [SerializeField] private GameObject _shield;
+    [SerializeField] private GameObject _shieldDurationMeter;
 
     private float _timer;
+    private float _timerShield;
+    private float _shieldDuration;
     private Camera _mainCamera;
     private Rigidbody2D _rbPlayer;
-    private GameObject _shield;
 
     /// <summary>
     /// Moves player object in a specified direction and rotates player towards a specified target
@@ -74,7 +77,10 @@ public class Player : PlayableObject
     public void EnableShield(float duration)
     {
         _shield.SetActive(true);
-        Invoke("DisableShield", duration);
+        _shieldDurationMeter.SetActive(true);
+        _shieldDuration = duration;
+        _timerShield = duration;
+        //Invoke("DisableShield", duration);
     }
 
     private void Awake()
@@ -82,8 +88,7 @@ public class Player : PlayableObject
         _mainCamera = Camera.main;
         _rbPlayer = GetComponent<Rigidbody2D>();
         _timer = _shootingRate;
-        _shield = GameObject.Find("Shield");
-        _shield.SetActive(false);
+        DisableShield();
 
         // Set player health
         health = new Health(100.0f, 0.5f, 100.0f);
@@ -96,10 +101,44 @@ public class Player : PlayableObject
     {
         _timer += Time.deltaTime;
         health.RegenHealth();
+
+        if (_shield.activeSelf)
+        {
+            if (_timerShield > 0)
+            {
+                _timerShield -= Time.deltaTime;
+                UpdateShieldDurationMeter(_timerShield, _shieldDuration);
+            }
+            else
+            {
+                DisableShield();
+            }
+        }
+    }
+
+    private void UpdateShieldDurationMeter(float timeRemaining, float duration)
+    {
+        float percentTimeRemaining = timeRemaining / duration;
+        int numberOfDurationUnitsToDisplay = Mathf.RoundToInt(percentTimeRemaining * 4.0f);
+
+        for (int i = 0; i < _shieldDurationMeter.transform.childCount; i++)
+        {
+            if (numberOfDurationUnitsToDisplay > 0)
+            {
+                _shieldDurationMeter.transform.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                _shieldDurationMeter.transform.GetChild(i).gameObject.SetActive(false);
+            }
+
+            numberOfDurationUnitsToDisplay--;
+        }
     }
 
     private void DisableShield()
     {
         _shield.SetActive(false);
+        _shieldDurationMeter.SetActive(false);
     }
 }
