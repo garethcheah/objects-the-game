@@ -23,7 +23,7 @@ public class HealthPickup : Pickup, IDamageable
 
     public void GetDamage(float damage)
     {
-        // This allows player to shoot the pickups to collect them
+        // This allows _player to shoot the pickups to collect them
         OnPicked();
     }
 

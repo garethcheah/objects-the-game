@@ -14,7 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _textHealth;
     [SerializeField] private TMP_Text _textScore;
     [SerializeField] private TMP_Text _textHighScore;
-    
+    [SerializeField] private GameObject _nukeInventory;
+
     private Player _player;
     private ScoreManager _scoreManager;
 
@@ -39,6 +40,8 @@ public class UIManager : MonoBehaviour
     {
         _player = GameManager.GetInstance().GetPlayer();
         _player.health.OnHealthUpdate += UpdateHealth;
+        _player.OnNukeInventoryUpdate += UpdateNukeInventory;
+        UpdateNukeInventory(0);
         _menuPanel.SetActive(false);
     }
 
@@ -54,5 +57,16 @@ public class UIManager : MonoBehaviour
 
         GameManager.GetInstance().OnGameStart += GameStarted;
         GameManager.GetInstance().OnGameOver += GameOver;
+    }
+
+    private void UpdateNukeInventory(int nukeInventoryCount)
+    {
+        int activeNukeCount = 0;
+
+        for (int i = 0; i < _nukeInventory.transform.childCount; i++)
+        {
+            _nukeInventory.transform.GetChild(i).gameObject.SetActive(activeNukeCount < nukeInventoryCount);
+            activeNukeCount++;
+        }
     }
 }

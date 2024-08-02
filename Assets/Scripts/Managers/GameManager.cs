@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     private Player _player;
     private GameObject _tempEnemy;
     private bool _isEnemySpawning;
-    //private bool _isPlaying;
 
     /// <summary>
     /// Singleton
@@ -38,7 +37,6 @@ public class GameManager : MonoBehaviour
     {
         _player = Instantiate(_playerTemplate, Vector2.zero, Quaternion.identity).GetComponent<Player>();
         _player.OnDeath += StopGame;
-        //_isPlaying = true;
 
         OnGameStart?.Invoke();
         StartCoroutine(GameStarter());
@@ -62,19 +60,28 @@ public class GameManager : MonoBehaviour
     {
         _isEnemySpawning = false;
         yield return new WaitForSeconds(2.0f);
-        //_isPlaying = false;
 
+        DestroyAllEnemiesAndPickups(false);
+
+        OnGameOver?.Invoke();
+    }
+
+    public void DestroyAllEnemiesAndPickups(bool updateScore)
+    {
         foreach (Enemy enemy in FindObjectsOfType(typeof(Enemy)))
         {
             Destroy(enemy.gameObject);
+
+            if (updateScore)
+            {
+                scoreManager.IncrementScore();
+            }
         }
 
         foreach (Pickup pickup in FindObjectsOfType(typeof(Pickup)))
         {
             Destroy(pickup.gameObject);
         }
-
-        OnGameOver?.Invoke();
     }
 
     public void NotifyDeath(Enemy enemy)
@@ -90,7 +97,7 @@ public class GameManager : MonoBehaviour
         }
         catch (NullReferenceException e)
         {
-            Debug.Log("No player in the scene. Exception: " + e.Message);
+            Debug.Log("No _player in the scene. Exception: " + e.Message);
         }
     }
 

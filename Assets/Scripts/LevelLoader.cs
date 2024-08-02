@@ -8,7 +8,7 @@ public class LevelLoader : MonoBehaviour
     void Start()
     {
         // Create Player
-        //Player player = new Player();
+        //Player _player = new Player();
 
         // Create enemies
         //Enemy enemy1 = new Enemy("enemy1", EnemyType.MachineGun);
@@ -20,7 +20,7 @@ public class LevelLoader : MonoBehaviour
         //Weapon machineGun = new Weapon();
 
         // Assign weapons
-        //player.PlayableObjectWeapon = gun;
+        //_player.PlayableObjectWeapon = gun;
         //enemy1.PlayableObjectWeapon = machineGun;
         //enemy2._weapon = assaultRifle;
     }

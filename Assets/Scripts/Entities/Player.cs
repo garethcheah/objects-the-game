@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class Player : PlayableObject
 {
     public Action OnDeath;
+    public Action<int> OnNukeInventoryUpdate;
+
+    public int nukeInventoryCount = 0;
+    public int nukeInventoryLimit = 3;
 
     [SerializeField] private float _speed = 100.0f;
     [SerializeField] private float _weaponDamage = 1.0f;
@@ -23,7 +27,7 @@ public class Player : PlayableObject
     private Rigidbody2D _rbPlayer;
 
     /// <summary>
-    /// Moves player object in a specified direction and rotates player towards a specified target
+    /// Moves _player object in a specified direction and rotates _player towards a specified target
     /// </summary>
     /// <param name="direction"></param>
     /// <param name="target"></param>
@@ -35,7 +39,7 @@ public class Player : PlayableObject
         target.x -= playerScreenPosition.x;
         target.y -= playerScreenPosition.y;
 
-        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg - 90.0f; // Add 90 degree offset to align exit point for bullets to the right position of player sprite
+        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg - 90.0f; // Add 90 degree offset to align exit point for bullets to the right position of _player sprite
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
@@ -80,7 +84,25 @@ public class Player : PlayableObject
         _shieldDurationMeter.SetActive(true);
         _shieldDuration = duration;
         _timerShield = duration;
-        //Invoke("DisableShield", duration);
+    }
+
+    public void AddNuke()
+    {
+        if (nukeInventoryCount < nukeInventoryLimit)
+        {
+            nukeInventoryCount++;
+            OnNukeInventoryUpdate?.Invoke(nukeInventoryCount);
+        }
+    }
+
+    public void UseNuke()
+    {
+        if (nukeInventoryCount > 0)
+        {
+            GameManager.GetInstance().DestroyAllEnemiesAndPickups(true);
+            nukeInventoryCount--;
+            OnNukeInventoryUpdate?.Invoke(nukeInventoryCount);
+        }
     }
 
     private void Awake()
@@ -90,10 +112,10 @@ public class Player : PlayableObject
         _timer = _shootingRate;
         DisableShield();
 
-        // Set player health
+        // Set _player health
         health = new Health(100.0f, 0.5f, 100.0f);
 
-        // Set player _weapon
+        // Set _player _weapon
         weapon = new Weapon("Player Weapon", _weaponDamage, _bulletSpeed);
     }
 
@@ -123,14 +145,7 @@ public class Player : PlayableObject
 
         for (int i = 0; i < _shieldDurationMeter.transform.childCount; i++)
         {
-            if (numberOfDurationUnitsToDisplay > 0)
-            {
-                _shieldDurationMeter.transform.GetChild(i).gameObject.SetActive(true);
-            }
-            else
-            {
-                _shieldDurationMeter.transform.GetChild(i).gameObject.SetActive(false);
-            }
+            _shieldDurationMeter.transform.GetChild(i).gameObject.SetActive(numberOfDurationUnitsToDisplay > 0);
 
             numberOfDurationUnitsToDisplay--;
         }

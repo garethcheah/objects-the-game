@@ -41,6 +41,7 @@ public class ScoreManager : MonoBehaviour
     public void OnGameStart()
     {
         _score = 0;
+        OnScoreUpdated?.Invoke();
     }
 
     private void Start()

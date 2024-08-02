@@ -27,14 +27,11 @@ public class Enemy : PlayableObject
         Vector2 direction = target - new Vector2(transform.position.x, transform.position.y);
 
         direction.Normalize();
-        //target.x = transform.position.x;
-        //target.y = transform.position.y;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90.0f;
 
         transform.position = Vector2.MoveTowards(this.transform.position, target, speed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, angle);
-        //transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
     public override void Move(float speed)
