@@ -146,7 +146,7 @@ public class Player : PlayableObject
     private void UpdateShieldDurationMeter(float timeRemaining, float duration)
     {
         float percentTimeRemaining = timeRemaining / duration;
-        int numberOfDurationUnitsToDisplay = Mathf.RoundToInt(percentTimeRemaining * 4.0f);
+        int numberOfDurationUnitsToDisplay = Mathf.CeilToInt(percentTimeRemaining * 4.0f);
 
         for (int i = 0; i < _shieldDurationMeter.transform.childCount; i++)
         {

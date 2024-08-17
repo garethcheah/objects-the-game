@@ -50,7 +50,9 @@ public class EnemyMelee : Enemy
         if (target == null)
             return;
 
-        if (GameManager.GetInstance().GetPlayer().IsShieldEnabled())
+        bool isPlayerShieldEnabled = GameManager.GetInstance().GetPlayer().IsShieldEnabled();
+
+        if (isPlayerShieldEnabled)
         {
             // Add buffer to attack range if player shield is enabled
             _attackRangeBuffer = _attackRangeShieldBuffer;
@@ -63,7 +65,10 @@ public class EnemyMelee : Enemy
         if (Vector2.Distance(transform.position, target.position) <= _attackRange + _attackRangeBuffer)
         {
             speed = 0.0f;
-            Attack(_attackTime);
+
+            // Melee attacks are ineffective while player shield is enabled
+            if (!isPlayerShieldEnabled)
+                Attack(_attackTime);
         }
         else
         {
