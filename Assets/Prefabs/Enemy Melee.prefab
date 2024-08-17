@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  _attackRange: 1
+  _attackRange: 1.15
+  _attackRangeShieldBuffer: 0.2
   _attackTime: 0.25
 --- !u!61 &63204978031289395
 BoxCollider2D:

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyMelee : Enemy
 {
-    [SerializeField] private float _attackRange = 1.0f;
+    [SerializeField] private float _attackRange = 1.15f;
+    [SerializeField] private float _attackRangeShieldBuffer = 1.0f;
     [SerializeField] private float _attackTime = 0.25f;
 
     private float _timer;
     private float _enemySpeed;
+    private float _attackRangeBuffer;
 
     public EnemyMelee(string enemyName) : base(enemyName, EnemyType.Melee)
     {
@@ -48,7 +50,17 @@ public class EnemyMelee : Enemy
         if (target == null)
             return;
 
-        if (Vector2.Distance(transform.position, target.position) < _attackRange)
+        if (GameManager.GetInstance().GetPlayer().IsShieldEnabled())
+        {
+            // Add buffer to attack range if player shield is enabled
+            _attackRangeBuffer = _attackRangeShieldBuffer;
+        }
+        else
+        {
+            _attackRangeBuffer = 0.0f;
+        }
+
+        if (Vector2.Distance(transform.position, target.position) <= _attackRange + _attackRangeBuffer)
         {
             speed = 0.0f;
             Attack(_attackTime);

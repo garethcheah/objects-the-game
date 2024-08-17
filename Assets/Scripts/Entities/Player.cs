@@ -86,6 +86,11 @@ public class Player : PlayableObject
         _timerShield = duration;
     }
 
+    public bool IsShieldEnabled()
+    {
+        return _shield.activeSelf;
+    }
+
     public void AddNuke()
     {
         if (nukeInventoryCount < nukeInventoryLimit)
