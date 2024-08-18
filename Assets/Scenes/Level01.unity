@@ -2266,6 +2266,9 @@ MonoBehaviour:
   - {fileID: 2075063681}
   _playerTemplate: {fileID: 2184828745764243091, guid: b2d60836c5dcc3e418e0ccf69b07dc01, type: 3}
   _enemySpawnRate: 0.4
+  _maxEnemySpawnRate: 3
+  _difficultyStepInterval: 20
+  _difficultyStepRate: 0.2
 --- !u!4 &1913313837
 Transform:
   m_ObjectHideFlags: 0
