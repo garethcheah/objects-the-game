@@ -17,11 +17,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _playerTemplate;
 
     [Header("Game Variables")]
-    [SerializeField] private float _enemySpawnRate = 0.5f;
+    [SerializeField] private float _enemySpawnRate = 0.4f;
+    [SerializeField] private float _maxEnemySpawnRate = 3.0f;
+    [SerializeField] private float _difficultyStepInterval = 20.0f;
+    [SerializeField] private float _difficultyStepRate = 0.2f;
 
     private Player _player;
     private GameObject _tempEnemy;
     private bool _isEnemySpawning;
+    private float _difficultyStepTimer;
 
     /// <summary>
     /// Singleton
@@ -114,6 +118,20 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         FindPlayer();
+    }
+
+    private void Update()
+    {
+        if (_enemySpawnRate < _maxEnemySpawnRate)
+        {
+            _difficultyStepTimer += Time.deltaTime;
+
+            if (_difficultyStepTimer >= _difficultyStepInterval)
+            {
+                _enemySpawnRate += _difficultyStepRate;
+                _difficultyStepTimer = 0;
+            }
+        }
     }
 
     private void SetInstance()
