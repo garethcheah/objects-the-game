@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [Header("Menu")]
+    [SerializeField] private GameObject _gameStatsPanel;
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private GameObject _controlsPanel;
     [SerializeField] private GameObject _enemyInfoPanel;
@@ -46,10 +47,12 @@ public class UIManager : MonoBehaviour
         _player.OnNukeInventoryUpdate += UpdateNukeInventory;
         UpdateNukeInventory(0);
         _menuPanel.SetActive(false);
+        _gameStatsPanel.SetActive(true);
     }
 
     public void GameOver()
     {
+        _gameStatsPanel.SetActive(false);
         _menuPanel.SetActive(true);
         _textGameOver.SetActive(true);
     }
@@ -89,6 +92,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         DisplayMainMenu();
+        _gameStatsPanel.SetActive(false);
         _textGameOver.SetActive(false);
         _scoreManager = GameManager.GetInstance().scoreManager;
 
