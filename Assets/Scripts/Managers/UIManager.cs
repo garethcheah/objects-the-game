@@ -7,6 +7,9 @@ public class UIManager : MonoBehaviour
 {
     [Header("Menu")]
     [SerializeField] private GameObject _menuPanel;
+    [SerializeField] private GameObject _controlsPanel;
+    [SerializeField] private GameObject _enemyInfoPanel;
+    [SerializeField] private GameObject _powerupInfoPanel;
     [SerializeField] private GameObject _textGameOver;
     [SerializeField] private TMP_Text _textMenuHighScore;
 
@@ -51,8 +54,42 @@ public class UIManager : MonoBehaviour
         _textGameOver.SetActive(true);
     }
 
+    public void DisplayMainMenu()
+    {
+        _controlsPanel.SetActive(false);
+        _enemyInfoPanel.SetActive(false);
+        _powerupInfoPanel.SetActive(false);
+        _menuPanel.SetActive(true);
+    }
+
+    public void DisplayControlsPanel()
+    {
+        _menuPanel.SetActive(false);
+        _enemyInfoPanel.SetActive(false);
+        _powerupInfoPanel.SetActive(false);
+        _controlsPanel.SetActive(true);
+    }
+
+    public void DisplayEnemyInfoPanel()
+    {
+        _menuPanel.SetActive(false);
+        _controlsPanel.SetActive(false);
+        _powerupInfoPanel.SetActive(false);
+        _enemyInfoPanel.SetActive(true);
+    }
+
+    public void DisplayPowerupInfoPanel()
+    {
+        _menuPanel.SetActive(false);
+        _controlsPanel.SetActive(false);
+        _enemyInfoPanel.SetActive(false);
+        _powerupInfoPanel.SetActive(true);
+    }
+
     private void Awake()
     {
+        DisplayMainMenu();
+        _textGameOver.SetActive(false);
         _scoreManager = GameManager.GetInstance().scoreManager;
 
         GameManager.GetInstance().OnGameStart += GameStarted;
