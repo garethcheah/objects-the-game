@@ -6,6 +6,7 @@ public class EnemyExploder : Enemy
 {
     [SerializeField] private float _explodeRange = 1.5f;
     [SerializeField] private float _explodeDamage = 50.0f;
+    [SerializeField] private AudioClip _audioClipExplode;
 
     private SpriteRenderer _srEnemy;
     private ParticleSystem _explosionParticleSystem;
@@ -25,6 +26,7 @@ public class EnemyExploder : Enemy
             _hasAlreadyExploded = true;
             Destroy(_srEnemy);
             Invoke("Die", _explosionParticleSystem.main.duration);
+            SoundFXManager.instance.PlaySoundFXClip(_audioClipExplode, transform, 1.0f);
         }
     }
 

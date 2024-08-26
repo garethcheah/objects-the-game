@@ -5035,3 +5035,4 @@ MonoBehaviour:
   speed: 1
   _explodeRange: 1.5
   _explodeDamage: 50
+  _audioClipExplode: {fileID: 8300000, guid: 82c09f48fc4facb4ebaf7d9c011caa3c, type: 3}

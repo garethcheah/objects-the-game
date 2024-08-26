@@ -5,11 +5,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// Singleton
+    /// </summary>
+    public static GameManager instance;
+
     public ScoreManager scoreManager;
     public PickupSpawner pickUpSpawner;
+    public bool isStarted;
+    public bool isPaused;
 
     public Action OnGameStart;
     public Action OnGameOver;
+    public Action OnGamePause;
+    public Action OnGameUnpause;
 
     [Header("Game Entities")]
     [SerializeField] private GameObject[] _enemyTemplates;
@@ -22,25 +31,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _difficultyStepInterval = 20.0f;
     [SerializeField] private float _difficultyStepRate = 0.2f;
 
+    [Header("Sound FX")]
+    [SerializeField] private AudioClip _audioClipMenuSelect;
+
     private Player _player;
     private GameObject _tempEnemy;
     private bool _isEnemySpawning;
     private float _difficultyStepTimer;
 
-    /// <summary>
-    /// Singleton
-    /// </summary>
-    private static GameManager _instance;
-
-    public static GameManager GetInstance()
-    {
-        return _instance;
-    }
-
     public void StartGame()
     {
         _player = Instantiate(_playerTemplate, Vector2.zero, Quaternion.identity).GetComponent<Player>();
         _player.OnDeath += StopGame;
+        isStarted = true;
+        PlayMenuSelectFX();
 
         OnGameStart?.Invoke();
         StartCoroutine(GameStarter());
@@ -56,6 +60,7 @@ public class GameManager : MonoBehaviour
     public void StopGame()
     {
         _isEnemySpawning = false;
+        isStarted = false;
         scoreManager.SetHighScore();
         StartCoroutine(GameStopper());
     }
@@ -110,6 +115,27 @@ public class GameManager : MonoBehaviour
         return _player;
     }
 
+    public void PlayMenuSelectFX()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(_audioClipMenuSelect, transform, 1.0f);
+    }
+
+    public void PauseGame()
+    {
+        isPaused = true;
+        _isEnemySpawning = false;
+        Time.timeScale = 0.0f;
+        OnGamePause?.Invoke();
+    }
+
+    public void UnpauseGame()
+    {
+        isPaused = false;
+        _isEnemySpawning = true;
+        Time.timeScale = 1.0f;
+        OnGameUnpause?.Invoke();
+    }
+
     private void Awake()
     {
         SetInstance();
@@ -122,6 +148,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // Increase game difficulty over time by changing enemy spawn rate
         if (_enemySpawnRate < _maxEnemySpawnRate)
         {
             _difficultyStepTimer += Time.deltaTime;
@@ -136,13 +163,18 @@ public class GameManager : MonoBehaviour
 
     private void SetInstance()
     {
-        if (_instance != null && _instance != this)
+        //if (instance != null && instance != this)
+        //{
+        //    Destroy(instance);
+        //}
+        //else
+        //{
+        //    instance = this;
+        //}
+
+        if (instance == null)
         {
-            Destroy(_instance);
-        }
-        else
-        {
-            _instance = this;
+            instance = this;
         }
     }
 

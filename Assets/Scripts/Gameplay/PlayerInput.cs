@@ -17,17 +17,32 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _horizontal = Input.GetAxis("Horizontal");
-        _vertical = Input.GetAxis("Vertical");
-        _lookTarget = Input.mousePosition;
-
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyUp(KeyCode.Escape) && GameManager.instance.isStarted)
         {
-            _player.Shoot();
+            if (GameManager.instance.isPaused)
+            {
+                GameManager.instance.UnpauseGame();
+            }
+            else
+            {
+                GameManager.instance.PauseGame();
+            }
         }
-        else if (Input.GetMouseButtonDown(1))
+
+        if (!GameManager.instance.isPaused)
         {
-            _player.UseNuke();
+            _horizontal = Input.GetAxis("Horizontal");
+            _vertical = Input.GetAxis("Vertical");
+            _lookTarget = Input.mousePosition;
+
+            if (Input.GetMouseButton(0))
+            {
+                _player.Shoot();
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                _player.UseNuke();
+            }
         }
     }
 

@@ -51,7 +51,7 @@ public class Enemy : PlayableObject
 
     public override void Die()
     {
-        GameManager.GetInstance().NotifyDeath(this);
+        GameManager.instance.NotifyDeath(this);
         Destroy(gameObject);
     }
 
@@ -64,7 +64,7 @@ public class Enemy : PlayableObject
         if (health.GetHealth() <= 0)
         {
             Die();
-            GameManager.GetInstance().scoreManager.IncrementScore();
+            GameManager.instance.scoreManager.IncrementScore();
         }
     }
 

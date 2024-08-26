@@ -19,6 +19,10 @@ public class Player : PlayableObject
     [SerializeField] private Bullet _bullet;
     [SerializeField] private GameObject _shield;
     [SerializeField] private GameObject _shieldDurationMeter;
+    [SerializeField] private AudioClip _audioClipWeapon;
+    [SerializeField] private AudioClip _audioClipShieldActivate;
+    [SerializeField] private AudioClip _audioClipShieldDeactivate;
+    [SerializeField] private AudioClip _audioClipNuke;
 
     private float _timer;
     private float _timerShield;
@@ -50,6 +54,7 @@ public class Player : PlayableObject
             Debug.Log("Player shooting.");
             _timer = 0.0f;
             weapon.Shoot(_bullet, this, "Enemy");
+            SoundFXManager.instance.PlaySoundFXClip(_audioClipWeapon, transform, 1.0f);
         }
     }
 
@@ -84,6 +89,7 @@ public class Player : PlayableObject
         _shieldDurationMeter.SetActive(true);
         _shieldDuration = duration;
         _timerShield = duration;
+        SoundFXManager.instance.PlaySoundFXClip(_audioClipShieldActivate, transform, 1.0f);
     }
 
     public bool IsShieldEnabled()
@@ -104,9 +110,10 @@ public class Player : PlayableObject
     {
         if (nukeInventoryCount > 0)
         {
-            GameManager.GetInstance().DestroyAllEnemiesAndPickups(true);
+            GameManager.instance.DestroyAllEnemiesAndPickups(true);
             nukeInventoryCount--;
             OnNukeInventoryUpdate?.Invoke(nukeInventoryCount);
+            SoundFXManager.instance.PlaySoundFXClip(_audioClipNuke, transform, 1.0f);
         }
     }
 
@@ -115,7 +122,8 @@ public class Player : PlayableObject
         _mainCamera = Camera.main;
         _rbPlayer = GetComponent<Rigidbody2D>();
         _timer = _shootingRate;
-        DisableShield();
+        _shield.SetActive(false);
+        _shieldDurationMeter.SetActive(false);
 
         // Set _player health
         health = new Health(100.0f, 0.5f, 100.0f);
@@ -126,21 +134,25 @@ public class Player : PlayableObject
 
     private void Update()
     {
-        _timer += Time.deltaTime;
-        health.RegenHealth();
-
-        if (_shield.activeSelf)
+        if (!GameManager.instance.isPaused)
         {
-            if (_timerShield > 0)
+            _timer += Time.deltaTime;
+            health.RegenHealth();
+
+            if (_shield.activeSelf)
             {
-                _timerShield -= Time.deltaTime;
-                UpdateShieldDurationMeter(_timerShield, _shieldDuration);
-            }
-            else
-            {
-                DisableShield();
+                if (_timerShield > 0)
+                {
+                    _timerShield -= Time.deltaTime;
+                    UpdateShieldDurationMeter(_timerShield, _shieldDuration);
+                }
+                else
+                {
+                    DisableShield();
+                }
             }
         }
+        
     }
 
     private void UpdateShieldDurationMeter(float timeRemaining, float duration)
@@ -160,5 +172,6 @@ public class Player : PlayableObject
     {
         _shield.SetActive(false);
         _shieldDurationMeter.SetActive(false);
+        SoundFXManager.instance.PlaySoundFXClip(_audioClipShieldDeactivate, transform, 1.0f);
     }
 }

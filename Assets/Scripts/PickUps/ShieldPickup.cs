@@ -10,7 +10,7 @@ public class ShieldPickup : Pickup
     {
         base.OnPicked();
 
-        var player = GameManager.GetInstance().GetPlayer();
+        var player = GameManager.instance.GetPlayer();
 
         player.EnableShield(_shieldDuration);
     }

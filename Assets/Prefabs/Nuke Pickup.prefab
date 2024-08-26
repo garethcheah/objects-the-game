@@ -171,3 +171,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeToLive: 15
+  _audioClipPicked: {fileID: 8300000, guid: ee674b32ceae83a4c8d40d3e463d7c81, type: 3}

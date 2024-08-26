@@ -176,3 +176,4 @@ MonoBehaviour:
   _weaponDamage: 1
   _bulletSpeed: 5
   _bullet: {fileID: 4024393071885866918, guid: 27cc92a7a61730a43b9f7932ab3f0f20, type: 3}
+  _audioClipWeapon: {fileID: 8300000, guid: 3b3f0ca42f62b4f4da4aa5edb599ad3b, type: 3}

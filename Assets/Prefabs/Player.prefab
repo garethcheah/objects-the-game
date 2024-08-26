@@ -272,6 +272,11 @@ MonoBehaviour:
   _bullet: {fileID: 4024393071885866918, guid: f5a1b5f51dcb65c4da63f04da6d58722, type: 3}
   _shield: {fileID: 4155053464830616670}
   _shieldDurationMeter: {fileID: 7793718327951474584}
+  _audioClipWeapon: {fileID: 8300000, guid: 49898e97f32e58842bb177db77485118, type: 3}
+  _audioClipShieldActivate: {fileID: 8300000, guid: 771fa265e7a08684db4887fd63a59c44, type: 3}
+  _audioClipShieldDeactivate: {fileID: 8300000, guid: 9933fc3e4a62b8747a9dfec1d6149f67, type: 3}
+  _audioClipNuke: {fileID: 8300000, guid: 60777c94e046d8146b30ca2308cb5276, type: 3}
+  _audioClipPowerUp: {fileID: 8300000, guid: 919bda7b0e202c642936d4c24f709df8, type: 3}
 --- !u!114 &8962866878750726007
 MonoBehaviour:
   m_ObjectHideFlags: 0

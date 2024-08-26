@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _controlsPanel;
     [SerializeField] private GameObject _enemyInfoPanel;
     [SerializeField] private GameObject _powerupInfoPanel;
+    [SerializeField] private GameObject _pausePanel;
     [SerializeField] private GameObject _textGameOver;
     [SerializeField] private TMP_Text _textMenuHighScore;
 
@@ -42,7 +43,7 @@ public class UIManager : MonoBehaviour
 
     public void GameStarted()
     {
-        _player = GameManager.GetInstance().GetPlayer();
+        _player = GameManager.instance.GetPlayer();
         _player.health.OnHealthUpdate += UpdateHealth;
         _player.OnNukeInventoryUpdate += UpdateNukeInventory;
         UpdateNukeInventory(0);
@@ -63,6 +64,7 @@ public class UIManager : MonoBehaviour
         _enemyInfoPanel.SetActive(false);
         _powerupInfoPanel.SetActive(false);
         _menuPanel.SetActive(true);
+        GameManager.instance.PlayMenuSelectFX();
     }
 
     public void DisplayControlsPanel()
@@ -71,6 +73,7 @@ public class UIManager : MonoBehaviour
         _enemyInfoPanel.SetActive(false);
         _powerupInfoPanel.SetActive(false);
         _controlsPanel.SetActive(true);
+        GameManager.instance.PlayMenuSelectFX();
     }
 
     public void DisplayEnemyInfoPanel()
@@ -79,6 +82,7 @@ public class UIManager : MonoBehaviour
         _controlsPanel.SetActive(false);
         _powerupInfoPanel.SetActive(false);
         _enemyInfoPanel.SetActive(true);
+        GameManager.instance.PlayMenuSelectFX();
     }
 
     public void DisplayPowerupInfoPanel()
@@ -87,17 +91,36 @@ public class UIManager : MonoBehaviour
         _controlsPanel.SetActive(false);
         _enemyInfoPanel.SetActive(false);
         _powerupInfoPanel.SetActive(true);
+        GameManager.instance.PlayMenuSelectFX();
+    }
+
+    public void DisplayPausePanel()
+    {
+        _gameStatsPanel.SetActive(false);
+        _pausePanel.SetActive(true);
+    }
+
+    public void HidePausePanel()
+    {
+        _pausePanel.SetActive(false);
+        _gameStatsPanel.SetActive(true);
     }
 
     private void Awake()
     {
-        DisplayMainMenu();
+        _controlsPanel.SetActive(false);
+        _enemyInfoPanel.SetActive(false);
+        _powerupInfoPanel.SetActive(false);
+        _pausePanel.SetActive(false);
+        _menuPanel.SetActive(true);
         _gameStatsPanel.SetActive(false);
         _textGameOver.SetActive(false);
-        _scoreManager = GameManager.GetInstance().scoreManager;
+        _scoreManager = GameManager.instance.scoreManager;
 
-        GameManager.GetInstance().OnGameStart += GameStarted;
-        GameManager.GetInstance().OnGameOver += GameOver;
+        GameManager.instance.OnGameStart += GameStarted;
+        GameManager.instance.OnGameOver += GameOver;
+        GameManager.instance.OnGamePause += DisplayPausePanel;
+        GameManager.instance.OnGameUnpause += HidePausePanel;
     }
 
     private void UpdateNukeInventory(int nukeInventoryCount)

@@ -6,6 +6,7 @@ public class HealthPickup : Pickup, IDamageable
 {
     [SerializeField] private float _healthMin;
     [SerializeField] private float _healthMax;
+    [SerializeField] private AudioClip _audioClipPicked;
 
     public override void OnPicked()
     {
@@ -14,11 +15,10 @@ public class HealthPickup : Pickup, IDamageable
         // Increase health
         float health = Random.Range(_healthMin, _healthMax);
 
-        var player = GameManager.GetInstance().GetPlayer();
+        var player = GameManager.instance.GetPlayer();
 
         player.health.AddHealth(health);
-
-        Debug.Log("Health added.");
+        SoundFXManager.instance.PlaySoundFXClip(_audioClipPicked, player.transform, 1.0f);
     }
 
     public void GetDamage(float damage)

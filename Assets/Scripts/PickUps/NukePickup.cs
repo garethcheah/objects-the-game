@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class NukePickup : Pickup
 {
+    [SerializeField] AudioClip _audioClipPicked;
+
     private Player _player;
 
     public override void OnPicked()
     {
         base.OnPicked();
         _player.AddNuke();
+        SoundFXManager.instance.PlaySoundFXClip(_audioClipPicked, _player.transform, 1.0f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -22,7 +25,7 @@ public class NukePickup : Pickup
 
     private void Awake()
     {
-        _player = GameManager.GetInstance().GetPlayer();
+        _player = GameManager.instance.GetPlayer();
     }
 
     private void Start()

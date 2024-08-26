@@ -9,6 +9,7 @@ public class EnemySniper : Enemy
     [SerializeField] private float _weaponDamage = 5.0f;
     [SerializeField] private float _bulletSpeed = 10.0f;
     [SerializeField] private Bullet _bullet;
+    [SerializeField] private AudioClip _audioClipWeapon;
 
     private float _timer;
     private float _enemySpeed;
@@ -25,6 +26,7 @@ public class EnemySniper : Enemy
         {
             _timer = 0.0f;
             weapon.Shoot(_bullet, this, "Player");
+            SoundFXManager.instance.PlaySoundFXClip(_audioClipWeapon, transform, 1.0f);
         }
     }
 

@@ -136,3 +136,4 @@ MonoBehaviour:
   _timeToLive: 15
   _healthMin: 5
   _healthMax: 15
+  _audioClipPicked: {fileID: 8300000, guid: 90062c7435f43d74a9e3406ac38b8c27, type: 3}

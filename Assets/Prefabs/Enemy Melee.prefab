@@ -102,6 +102,7 @@ MonoBehaviour:
   _attackRange: 1.15
   _attackRangeShieldBuffer: 0.5
   _attackTime: 0.25
+  _audioClipAttack: {fileID: 8300000, guid: 1c79e35b3fb10944d96f0cc310bff182, type: 3}
 --- !u!61 &63204978031289395
 BoxCollider2D:
   m_ObjectHideFlags: 0

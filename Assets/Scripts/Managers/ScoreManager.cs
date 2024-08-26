@@ -48,6 +48,6 @@ public class ScoreManager : MonoBehaviour
     {
         _highScore = PlayerPrefs.GetInt("HighScore");
         OnHighScoreUpdated?.Invoke();
-        GameManager.GetInstance().OnGameStart += OnGameStart;
+        GameManager.instance.OnGameStart += OnGameStart;
     }
 }

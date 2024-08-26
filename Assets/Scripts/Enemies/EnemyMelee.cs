@@ -7,6 +7,7 @@ public class EnemyMelee : Enemy
     [SerializeField] private float _attackRange = 1.15f;
     [SerializeField] private float _attackRangeShieldBuffer = 1.0f;
     [SerializeField] private float _attackTime = 0.25f;
+    [SerializeField] private AudioClip _audioClipAttack;
 
     private float _timer;
     private float _enemySpeed;
@@ -27,7 +28,7 @@ public class EnemyMelee : Enemy
         {
             _timer = 0.0f;
             target.GetComponent<IDamageable>().GetDamage(weapon.GetDamage());
-            Debug.Log("_weapon.GetDamage()=" + weapon.GetDamage().ToString());
+            SoundFXManager.instance.PlaySoundFXClip(_audioClipAttack, transform, 1.0f);
         }
     }
 
@@ -50,7 +51,7 @@ public class EnemyMelee : Enemy
         if (target == null)
             return;
 
-        bool isPlayerShieldEnabled = GameManager.GetInstance().GetPlayer().IsShieldEnabled();
+        bool isPlayerShieldEnabled = GameManager.instance.GetPlayer().IsShieldEnabled();
 
         if (isPlayerShieldEnabled)
         {
