@@ -60,38 +60,42 @@ public class UIManager : MonoBehaviour
 
     public void DisplayMainMenu()
     {
+        GameManager.instance.PlayMenuSelectFX();
+
         _controlsPanel.SetActive(false);
         _enemyInfoPanel.SetActive(false);
         _powerupInfoPanel.SetActive(false);
         _menuPanel.SetActive(true);
-        GameManager.instance.PlayMenuSelectFX();
     }
 
     public void DisplayControlsPanel()
     {
+        GameManager.instance.PlayMenuSelectFX();
+
         _menuPanel.SetActive(false);
         _enemyInfoPanel.SetActive(false);
         _powerupInfoPanel.SetActive(false);
         _controlsPanel.SetActive(true);
-        GameManager.instance.PlayMenuSelectFX();
     }
 
     public void DisplayEnemyInfoPanel()
     {
+        GameManager.instance.PlayMenuSelectFX();
+
         _menuPanel.SetActive(false);
         _controlsPanel.SetActive(false);
         _powerupInfoPanel.SetActive(false);
         _enemyInfoPanel.SetActive(true);
-        GameManager.instance.PlayMenuSelectFX();
     }
 
     public void DisplayPowerupInfoPanel()
     {
+        GameManager.instance.PlayMenuSelectFX();
+
         _menuPanel.SetActive(false);
         _controlsPanel.SetActive(false);
         _enemyInfoPanel.SetActive(false);
         _powerupInfoPanel.SetActive(true);
-        GameManager.instance.PlayMenuSelectFX();
     }
 
     public void DisplayPausePanel()

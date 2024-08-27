@@ -38,13 +38,15 @@ public class GameManager : MonoBehaviour
     private GameObject _tempEnemy;
     private bool _isEnemySpawning;
     private float _difficultyStepTimer;
+    private float _enemySpawnRateStart;
 
     public void StartGame()
     {
+        PlayMenuSelectFX();
+
         _player = Instantiate(_playerTemplate, Vector2.zero, Quaternion.identity).GetComponent<Player>();
         _player.OnDeath += StopGame;
         isStarted = true;
-        PlayMenuSelectFX();
 
         OnGameStart?.Invoke();
         StartCoroutine(GameStarter());
@@ -52,17 +54,39 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GameStarter()
     {
+        //Reset enemy spawn rate
+        _enemySpawnRate = _enemySpawnRateStart;
+
+        //Reset difficulty step timer
+        _difficultyStepTimer = 0.0f;
+
         yield return new WaitForSeconds(2.0f);
+
         _isEnemySpawning = true;
         StartCoroutine(EnemySpawner());
     }
 
     public void StopGame()
     {
-        _isEnemySpawning = false;
         isStarted = false;
         scoreManager.SetHighScore();
         StartCoroutine(GameStopper());
+    }
+
+    public void QuitGame()
+    {
+        PlayMenuSelectFX();
+
+        isStarted = false;
+        OnGameUnpause?.Invoke();
+        StartCoroutine(GameStopper());
+
+        // Destroy player object
+        Destroy(_player.gameObject);
+
+        // Reset pause game variables
+        isPaused = false;
+        Time.timeScale = 1.0f;
     }
 
     IEnumerator GameStopper()
@@ -130,6 +154,8 @@ public class GameManager : MonoBehaviour
 
     public void UnpauseGame()
     {
+        PlayMenuSelectFX();
+
         isPaused = false;
         _isEnemySpawning = true;
         Time.timeScale = 1.0f;
@@ -144,6 +170,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         FindPlayer();
+        _enemySpawnRateStart = _enemySpawnRate;
     }
 
     private void Update()
