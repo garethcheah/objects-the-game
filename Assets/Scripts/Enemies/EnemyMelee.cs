@@ -12,6 +12,7 @@ public class EnemyMelee : Enemy
     private float _timer;
     private float _enemySpeed;
     private float _attackRangeBuffer;
+    private IDamageable _damageable;
 
     public EnemyMelee(string enemyName) : base(enemyName, EnemyType.Melee)
     {
@@ -27,7 +28,10 @@ public class EnemyMelee : Enemy
         else
         {
             _timer = 0.0f;
-            target.GetComponent<IDamageable>().GetDamage(weapon.GetDamage());
+            // The line below was causing memory access out of bounds error on WebGL.
+            // Current solution: Set _damageable using GameManager.instance.GetPlayer() in the Start() method.
+            //target.GetComponent<IDamageable>().GetDamage(weapon.GetDamage());
+            _damageable.GetDamage(weapon.GetDamage());
             SoundFXManager.instance.PlaySoundFXClip(_audioClipAttack, transform, 1.0f);
         }
     }
@@ -36,6 +40,7 @@ public class EnemyMelee : Enemy
     {
         base.Start();
         _enemySpeed = speed;
+        _damageable = GameManager.instance.GetPlayer();
 
         // Set enemy health
         health = new Health(1, 0, 1);
