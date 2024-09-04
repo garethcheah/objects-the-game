@@ -17,7 +17,7 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape) && GameManager.instance.isStarted)
+        if (Input.GetKeyUp(KeyCode.Space) && GameManager.instance.isStarted)
         {
             if (GameManager.instance.isPaused)
             {
